@@ -19,10 +19,8 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [experienceOpen, setExperienceOpen] = useState(false);
-
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -35,7 +33,6 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
-  // Show header after scrolling past half viewport height
   useEffect(() => {
     const onScroll = () => {
       setShowHeader(window.scrollY > window.innerHeight * 0.5);
@@ -46,7 +43,6 @@ const Header = () => {
 
   if (!showHeader) return null;
 
-  // Smooth scroll helper
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -68,7 +64,7 @@ const Header = () => {
           />
         </a>
 
-        {/* Centered name button */}
+        {/* Center name button */}
         <button
           className="text-xl font-mono font-bold cursor-pointer bg-transparent border-none"
           onClick={() => scrollTo("intro")}
@@ -85,35 +81,21 @@ const Header = () => {
             onClick={() => setMenuOpen((v) => !v)}
             className="flex flex-col justify-between w-6 h-6 focus:outline-none"
           >
-            <span
-              className={`block h-0.5 bg-black rounded transform transition duration-300 ease-in-out ${
-                menuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            ></span>
-            <span
-              className={`block h-0.5 bg-black rounded transition duration-300 ease-in-out ${
-                menuOpen ? "opacity-0" : "opacity-100"
-              }`}
-            ></span>
-            <span
-              className={`block h-0.5 bg-black rounded transform transition duration-300 ease-in-out ${
-                menuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            ></span>
+            <span className={`block h-0.5 bg-black rounded transition ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block h-0.5 bg-black rounded transition ${menuOpen ? "opacity-0" : "opacity-100"}`} />
+            <span className={`block h-0.5 bg-black rounded transition ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
 
           {menuOpen && (
             <nav className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg font-sans text-black select-text">
-              {/* About Me toggle */}
+              {/* About section */}
               <div>
                 <button
                   onClick={() => setAboutOpen((v) => !v)}
                   className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between items-center"
                 >
                   About Me
-                  <span className={`transition-transform ${aboutOpen ? "rotate-90" : ""}`}>
-                    ▶
-                  </span>
+                  <span className={`transition-transform ${aboutOpen ? "rotate-90" : ""}`}>▶</span>
                 </button>
                 {aboutOpen && (
                   <div className="pl-6">
@@ -130,18 +112,14 @@ const Header = () => {
                 )}
               </div>
 
-              {/* Experience toggle */}
+              {/* Experience section */}
               <div>
                 <button
                   onClick={() => setExperienceOpen((v) => !v)}
                   className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between items-center"
                 >
                   Experience
-                  <span
-                    className={`transition-transform ${experienceOpen ? "rotate-90" : ""}`}
-                  >
-                    ▶
-                  </span>
+                  <span className={`transition-transform ${experienceOpen ? "rotate-90" : ""}`}>▶</span>
                 </button>
                 {experienceOpen && (
                   <div className="pl-6">
@@ -158,7 +136,7 @@ const Header = () => {
                 )}
               </div>
 
-              {/* Contact direct button */}
+              {/* Contact */}
               <button
                 onClick={() => scrollTo("contact")}
                 className="w-full text-left px-4 py-2 hover:bg-gray-100 border-t border-gray-300"
