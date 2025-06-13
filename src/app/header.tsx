@@ -15,7 +15,7 @@ const sections = {
 };
 
 const Header = () => {
-  const [showHeader, setShowHeader] = useState(false);
+  const [headerOpacity, setHeaderOpacity] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [experienceOpen, setExperienceOpen] = useState(false);
@@ -34,14 +34,15 @@ const Header = () => {
   }, [menuOpen]);
 
   useEffect(() => {
-    const onScroll = () => {
-      setShowHeader(window.scrollY > window.innerHeight * 0.5);
+    const handleScroll = () => {
+      const threshold = window.innerHeight * 0.8;
+      const scrollY = window.scrollY;
+      const opacity = Math.min(Math.max((scrollY - threshold + 100) / 200, 0), 1);
+      setHeaderOpacity(opacity);
     };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  if (!showHeader) return null;
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -52,17 +53,24 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white text-black shadow-md px-6 py-3 select-none">
+    <header
+      className="fixed top-0 left-0 w-full z-50 bg-white text-black shadow-md px-6 py-3 transition-opacity duration-300"
+      style={{ opacity: headerOpacity, pointerEvents: headerOpacity > 0.1 ? "auto" : "none" }}
+    >
       <div className="flex justify-between items-center">
         {/* Logo on left */}
-        <a href="#intro" className="flex items-center" onClick={() => scrollTo("intro")}>
+        <button
+          aria-label="Scroll to top"
+          onClick={() => scrollTo("intro")}
+          className="flex items-center bg-transparent border-none cursor-pointer"
+        >
           <img
             src="/LiamLogo.png"
             alt="Logo"
             className="w-10 h-10 rounded-full"
             draggable={false}
           />
-        </a>
+        </button>
 
         {/* Center name button */}
         <button

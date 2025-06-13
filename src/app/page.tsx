@@ -1,35 +1,47 @@
-"use client";  // <-- Add this line at the very top
+"use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-// import { Banner } from "./Banner";
-import IntroAnimation from "./IntroAnimation"; // Correct path
+import { useEffect } from "react";
+import IntroAnimation from "./IntroAnimation";
+import Header from "./header";
+import ExperienceSection from "./ExperienceSection";
+import Footer from "./footer";
+import AboutMe from "./about"; 
 
 export default function Home() {
-  const [showAnimation, setShowAnimation] = useState(true);
-
   useEffect(() => {
-    setTimeout(() => setShowAnimation(false), 2500); // Adjust duration if needed
+    const originalTitle = document.title;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.title = "👋 Come back soon!";
+      } else {
+        document.title = originalTitle;
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   return (
-    <div>
-      {/* Show animation at the start */}
-      {showAnimation && <IntroAnimation />}
+    <div style={{ backgroundColor: "#0a0a0a", color: "white" }}>
+      {/* INTRO */}
+      <IntroAnimation />
 
-      {/* Main Content */}
-      <main className={`transition-opacity ${showAnimation ? "opacity-0" : "opacity-100"}`}>
-        {/* Uncomment if you want to use the Banner component */}
-        {/* <Banner /> */}
+      {/* HEADER */}
+      <Header />
 
-        {/* Example of using Image from Next.js */}
-        <Image 
-          src="/your-image.jpg" // Replace with your actual image path
-          alt="Example Image"
-          width={500}
-          height={300}
-        />
-      </main>
+      {/* ABOUT */}
+      <AboutMe />
+
+      {/* EXPERIENCE */}
+      <ExperienceSection />
+
+      {/* FOOTER */}
+      <Footer />
     </div>
   );
 }
