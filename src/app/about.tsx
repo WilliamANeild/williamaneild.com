@@ -27,52 +27,46 @@ const aboutSections = [
     id: "personal",
     title: "Personally",
     typedWords: ["Personally"],
-    text: `Away from academics and finance I serve as Social Chair for the SAE fraternity where I enjoy organizing events and building connections with others. I am a big fan of the New York Knicks and try to catch their games whenever I can. When I am not watching basketball I spend time playing tennis and squash which are two sports I really enjoy because they keep me active and allow me to compete in a fun way. Golf and Texas Hold’em are activities I use to relax and unwind after busy days. Grilling is something I am really passionate about it gives me the chance to bring friends together enjoy good food and have a great time.`,
+    text: `Away from academics and finance I serve as Social Chair for the SAE fraternity where I enjoy organizing events and building connections with others. I am a big fan of the New York Knicks and try to catch their games whenever I can. When I am not watching basketball I spend time playing tennis and squash which are two sports I really enjoy because they keep me active and allow me to compete in a fun way. Golf and Texas Hold’em are activities I use to relax and unwind after busy days. Grilling is something I am really passionate about — it gives me the chance to bring friends together, enjoy good food, and have a great time.`,
     imageSrc: "/PersonallyImage.JPG",
     imageAlt: "Personal Image",
     textOnLeft: true,
   },
 ];
 
+// Fade-in paragraph component
 const FadeInParagraph = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLParagraphElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setIsVisible(true);
           observer.disconnect();
         }
       },
       { threshold: 0.3 }
     );
-    observer.observe(ref.current);
+
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
     <p
       ref={ref}
-      style={{
-        fontFamily: "Garamond, serif",
-        fontSize: "1.125rem",
-        lineHeight: "1.6",
-        maxWidth: 600,
-        margin: "0 auto",
-        opacity: visible ? 1 : 0,
-        transition: "opacity 1s ease-in",
-        whiteSpace: "pre-line",
-        textAlign: "center",
-      }}
+      className={`text-lg leading-relaxed opacity-0 transition-opacity duration-700 ${
+        isVisible ? "opacity-100" : ""
+      }`}
     >
       {children}
     </p>
   );
 };
 
+// Individual About Section
 const AboutSection = ({
   id,
   title,
@@ -91,44 +85,49 @@ const AboutSection = ({
   textOnLeft: boolean;
 }) => {
   const [hasTyped, setHasTyped] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setIsVisible(true);
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
-    observer.observe(ref.current);
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
     <section
       id={id}
-      ref={ref}
-      className={`min-h-screen flex flex-col md:flex-row items-center justify-center p-8 gap-12 ${
+      ref={sectionRef}
+      className={`w-full flex flex-col md:flex-row items-center justify-center py-16 px-6 gap-12 max-w-6xl mx-auto ${
         !textOnLeft ? "md:flex-row-reverse" : ""
       }`}
     >
+      {/* Image */}
       <div className="w-full md:w-1/2 flex justify-center">
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          width={550}
-          height={300}
-          className="rounded shadow-lg object-cover"
-        />
+        <div className="relative w-full max-w-md h-80 rounded-lg overflow-hidden shadow-lg">
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
       </div>
-      <div className="w-full md:w-1/2 text-center">
-        <h2 className="text-4xl font-mono font-bold mb-4">
-          {visible && !hasTyped ? (
+
+      {/* Text Content */}
+      <div className="w-full md:w-1/2 text-center md:text-left">
+        <h2 className="text-3xl sm:text-4xl font-mono font-bold mb-6">
+          {isVisible && !hasTyped ? (
             <Typewriter
               words={typedWords}
               loop={1}
@@ -143,19 +142,22 @@ const AboutSection = ({
             <span>{title}</span>
           )}
         </h2>
-        {visible && <FadeInParagraph>{text}</FadeInParagraph>}
+        {isVisible && <FadeInParagraph>{text}</FadeInParagraph>}
       </div>
     </section>
   );
 };
 
+// Main About Component
 export default function About() {
   return (
-    <div className="text-center my-12">
-      <h1 className="text-5xl font-mono font-bold">Get to know me...</h1>
-      {aboutSections.map((section) => (
-        <AboutSection key={section.id} {...section} />
-      ))}
-    </div>
+    <section className="py-20 px-6 bg-black text-white">
+      <div className="container mx-auto text-center max-w-4xl">
+        <h1 className="text-5xl font-mono font-bold tracking-wide mb-12">Get to know me...</h1>
+        {aboutSections.map((section) => (
+          <AboutSection key={section.id} {...section} />
+        ))}
+      </div>
+    </section>
   );
 }

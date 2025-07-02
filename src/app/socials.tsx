@@ -1,75 +1,81 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
 
 interface SocialRowProps {
   logo: string;
   alt: string;
   label: string;
   labelColor: string;
+  href?: string;
 }
 
-const SocialRow: React.FC<SocialRowProps> = ({ logo, alt, label, labelColor }) => {
+const SocialRow: React.FC<SocialRowProps> = ({ logo, alt, label, labelColor, href }) => {
   const [hover, setHover] = useState(false);
 
-  // Container for each social row
   const containerStyle: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
   };
 
-  // The logo image will slide left when hovered
   const logoStyle: React.CSSProperties = {
-    width: '40px',
-    height: '40px',
-    transition: 'transform 0.3s ease',
-    transform: hover ? 'translateX(-20px)' : 'translateX(0)',
+    width: "40px",
+    height: "40px",
+    transition: "transform 0.3s ease",
+    transform: hover ? "translateX(-15px)" : "translateX(0)",
   };
 
-  // The text is initially hidden (offset and transparent) and slides in on hover
   const textStyle: React.CSSProperties = {
-    marginLeft: '10px',
+    marginLeft: "10px",
     color: labelColor,
-    fontSize: '1.2rem',
-    transition: 'transform 0.3s ease, opacity 0.3s ease',
-    transform: hover ? 'translateX(0)' : 'translateX(-20px)',
+    fontSize: "1.2rem",
+    transition: "transform 0.3s ease, opacity 0.3s ease",
+    transform: hover ? "translateX(0)" : "translateX(-10px)",
     opacity: hover ? 1 : 0,
   };
 
   return (
-    <div
-      style={containerStyle}
+    <a
+      href={href || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ textDecoration: "none" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <img src={logo} alt={alt} style={logoStyle} />
-      <span style={textStyle}>{label}</span>
-    </div>
+      <div style={containerStyle}>
+        <img src={logo} alt={alt} style={logoStyle} />
+        <span style={textStyle}>{label}</span>
+      </div>
+    </a>
   );
 };
 
-const Socials: React.FC = () => {
+export default function Socials() {
   return (
     <div
       style={{
-        backgroundColor: '#1a1a1a', // Distinct background for this page
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative', // Allows absolute positioning for the back button
+        backgroundColor: "#0a0a0a",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        padding: "2rem",
       }}
     >
-      {/* Back Arrow Button */}
-      <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
+      {/* Back Button */}
+      <div style={{ position: "absolute", top: "20px", left: "20px" }}>
         <Link href="/">
           <button
             style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'white',
-              fontSize: '2rem',
-              cursor: 'pointer',
+              background: "transparent",
+              border: "none",
+              color: "white",
+              fontSize: "2rem",
+              cursor: "pointer",
             }}
             aria-label="Go back to main screen"
           >
@@ -78,38 +84,44 @@ const Socials: React.FC = () => {
         </Link>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-        {/* Instagram Section */}
+      {/* Social Links Container */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+        {/* Instagram */}
         <SocialRow
-          logo="/Users/liamneild/Desktop/instagram-logo-png-transparent-background.png"
+          logo="/instagram-logo.png"
           alt="Instagram Logo"
           label="Instagram: liam.neild"
-          labelColor="purple"
+          labelColor="#E1306C"
+          href="https://www.instagram.com/liam.neild "
         />
-        {/* LinkedIn Section */}
+
+        {/* LinkedIn */}
         <SocialRow
-          logo="/Users/liamneild/Desktop/sm_5b072d2f4f66c-removebg-preview.png"
+          logo="/linkedin-logo.png"
           alt="LinkedIn Logo"
           label="LinkedIn: william-neild"
-          labelColor="darkblue"
+          labelColor="#0077B5"
+          href="https://www.linkedin.com/in/william-neild "
         />
-        {/* Primary Email Section */}
+
+        {/* Primary Email */}
         <SocialRow
-          logo="/Users/liamneild/Desktop/Gmail-logo-design-on-transparent-background-PNG-removebg-preview.png"
+          logo="/gmail-logo.png"
           alt="Email Logo"
           label="Email: WilliamANeild@gmail.com"
-          labelColor="red"
+          labelColor="#EA4335"
+          href="mailto:WilliamANeild@gmail.com"
         />
-        {/* Alternate Email Section */}
+
+        {/* Alternate Email */}
         <SocialRow
-          logo="/Users/liamneild/Desktop/Emory_University-04-removebg-preview.png"
+          logo="/emory-logo.png"
           alt="Alternate Email Logo"
           label="Alternate Email: Liam.Neild@Emory.edu"
-          labelColor="lightblue"
+          labelColor="#00A8E8"
+          href="mailto:Liam.Neild@Emory.edu"
         />
       </div>
     </div>
   );
-};
-
-export default Socials;
+}

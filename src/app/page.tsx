@@ -5,9 +5,10 @@ import IntroAnimation from "./IntroAnimation";
 import Header from "./header";
 import ExperienceSection from "./ExperienceSection";
 import Footer from "./footer";
-import AboutMe from "./about"; 
+import AboutMe from "./about";
 
 export default function Home() {
+  // Handle tab visibility change
   useEffect(() => {
     const originalTitle = document.title;
 
@@ -26,19 +27,44 @@ export default function Home() {
     };
   }, []);
 
-  return (
-    <div style={{ backgroundColor: "#0a0a0a", color: "white" }}>
-      {/* INTRO */}
-      <IntroAnimation />
+  // Optional: Smooth scroll behavior
+  useEffect(() => {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = anchor.getAttribute("href");
+        if (targetId) {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      });
+    });
 
+    return () => {
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.removeEventListener("click", () => {});
+      });
+    };
+  }, []);
+
+  return (
+    <div className="bg-black text-white min-h-screen">
       {/* HEADER */}
       <Header />
 
-      {/* ABOUT */}
-      <AboutMe />
+      {/* MAIN CONTENT */}
+      <main>
+        {/* INTRO ANIMATION */}
+        <IntroAnimation />
 
-      {/* EXPERIENCE */}
-      <ExperienceSection />
+        {/* ABOUT ME */}
+        <AboutMe />
+
+        {/* EXPERIENCE SECTION */}
+        <ExperienceSection />
+      </main>
 
       {/* FOOTER */}
       <Footer />

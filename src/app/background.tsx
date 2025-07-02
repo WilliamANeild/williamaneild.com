@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+"use client";
 
-const images = [
-  "/Users/liamneild/Desktop/PortfolioWebsiteImage1.png",
-  "/Users/liamneild/Desktop/PortfolioWebsiteImage2.png",
-  "/Users/liamneild/Desktop/p0jx6gm3.jpg"
-];
+import { useState, useEffect } from "react";
 
 const Background = () => {
+  // Use relative paths (assumes images are in /public folder)
+  const images = [
+    "/PortfolioWebsiteImage1.png",
+    "/PortfolioWebsiteImage2.png",
+    "/p0jx6gm3.jpg"
+  ];
+
   const [index, setIndex] = useState(0);
 
+  // Cycle through images every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex(prevIndex => (prevIndex + 1) % images.length);
-    }, 5000); // Change image every 5 seconds
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -23,10 +27,12 @@ const Background = () => {
         <img
           key={i}
           src={src}
-          alt="background"
+          alt="Background visual"
           className={`background-image ${i === index ? "active" : ""}`}
+          loading="lazy"
         />
       ))}
+
       <style jsx>{`
         .background-container {
           position: fixed;
@@ -35,7 +41,7 @@ const Background = () => {
           width: 100vw;
           height: 100vh;
           overflow: hidden;
-          z-index: -1;
+          z-index: -10;
         }
 
         .background-image {
@@ -45,6 +51,7 @@ const Background = () => {
           object-fit: cover;
           opacity: 0;
           transition: opacity 1.5s ease-in-out;
+          pointer-events: none;
         }
 
         .background-image.active {

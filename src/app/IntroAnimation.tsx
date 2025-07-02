@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Typewriter } from "react-simple-typewriter";
 
 const text = "William Aldredge Neild";
-
 const words = [
   "Economics",
   "Mathematics",
@@ -18,11 +17,10 @@ const words = [
 
 const IntroAnimation = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [hasMounted, setHasMounted] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
 
+  // Handle scroll
   useEffect(() => {
-    setHasMounted(true);
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     const bgTimer = setTimeout(() => setShowBackground(true), 1000);
@@ -32,8 +30,6 @@ const IntroAnimation = () => {
       clearTimeout(bgTimer);
     };
   }, []);
-
-  if (!hasMounted) return null;
 
   const scale = scrollY < 300 ? 1 - scrollY / 1000 : 0.7;
   const translateY = scrollY < 300 ? scrollY / 4 : 75;
@@ -45,11 +41,11 @@ const IntroAnimation = () => {
       style={{
         backgroundColor: "#0a0a0a",
         height: isCompact ? "100px" : "100vh",
-        transition: "height 0.4s ease",
+        transition: "height 0.4s ease-in-out",
         position: "relative",
       }}
     >
-      {/* Fading background image */}
+      {/* Background Image */}
       {showBackground && !isCompact && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -59,10 +55,12 @@ const IntroAnimation = () => {
         >
           <Image
             src="/BackgroundNYC.jpg"
-            alt="NYC Skyline Background"
+            alt="NYC Skyline"
             fill
             priority
             className="object-cover"
+            sizes="100vw"
+            quality={85}
           />
         </motion.div>
       )}
@@ -82,7 +80,7 @@ const IntroAnimation = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="text-6xl font-bold text-white font-mono"
+            className="text-6xl font-bold text-white font-mono whitespace-pre"
           >
             {char === " " ? "\u00A0" : char}
           </motion.span>
@@ -94,17 +92,17 @@ const IntroAnimation = () => {
         <div
           style={{
             marginTop: "1rem",
-            fontFamily:
-              '"Cascadia Code", "Fira Code", Consolas, "Courier New", monospace',
+            fontFamily: '"Fira Code", "Courier New", monospace',
             fontSize: "1.5rem",
             fontWeight: "bold",
             color: "white",
             minHeight: "2rem",
+            textAlign: "center",
           }}
         >
           <Typewriter
             words={words}
-            loop={1}
+            loop={false}
             cursor
             cursorStyle="_"
             typeSpeed={80}
