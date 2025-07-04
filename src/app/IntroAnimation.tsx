@@ -1,118 +1,127 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { Typewriter } from "react-simple-typewriter";
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { Typewriter } from 'react-simple-typewriter';
 
-const text = "William Aldredge Neild";
 const words = [
-  "Economics",
-  "Mathematics",
-  "Computer Science",
-  "Quantitative",
-  "Finance",
-  "Excellence",
+  'Economics',
+  'Economics',
+  'Mathematics',
+  'Computer Science',
+  'Quantitative',
+  'Finance',
+  'Excellence',
 ];
 
-const IntroAnimation = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [showBackground, setShowBackground] = useState(false);
-
-  // Handle scroll
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    const bgTimer = setTimeout(() => setShowBackground(true), 1000);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(bgTimer);
-    };
-  }, []);
-
-  const scale = scrollY < 300 ? 1 - scrollY / 1000 : 0.7;
-  const translateY = scrollY < 300 ? scrollY / 4 : 75;
-  const isCompact = scrollY >= 300;
+export default function IntroAnimation() {
+  const [showCursor, setShowCursor] = useState(true);
 
   return (
-    <motion.div
-      className="w-full sticky top-0 flex flex-col justify-center items-center z-40 overflow-hidden"
-      style={{
-        backgroundColor: "#0a0a0a",
-        height: isCompact ? "100px" : "100vh",
-        transition: "height 0.4s ease-in-out",
-        position: "relative",
-      }}
-    >
+    <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-black font-sans">
       {/* Background Image */}
-      {showBackground && !isCompact && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.25 }}
-          transition={{ duration: 2 }}
-          className="absolute inset-0 z-[-1]"
-        >
-          <Image
-            src="/BackgroundNYC.jpg"
-            alt="NYC Skyline"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-            quality={85}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/BackgroundNYC.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black opacity-50" />
+      </div>
+
+      {/* Reveal Container + Typewriter */}
+      <div className="flex flex-col items-center space-y-4 z-10">
+        <div className="reveal-container relative inline-block overflow-hidden">
+          {/* Animated Line */}
+          <div
+            className="line absolute top-full left-1/2 h-[2px] bg-white origin-center"
+            style={{
+              transform: 'translateX(-50%) translateY(0)',
+              animation:
+                'fadeInLine 0.6s ease-in-out 0s forwards, ' +
+                'sitDelay 0.4s ease-in-out 0.6s forwards, ' +
+                'moveUpLine 0.8s ease-out 1s forwards, ' +
+                'collapseLine 0.4s ease-out 1.8s forwards',
+            }}
           />
-        </motion.div>
-      )}
 
-      {/* Animated Name */}
-      <motion.div
-        style={{
-          display: "flex",
-          gap: "0.25rem",
-          transform: `translateY(-${translateY}px) scale(${scale})`,
-          transition: "transform 0.3s ease",
-        }}
-      >
-        {text.split("").map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="text-6xl font-bold text-white font-mono whitespace-pre"
+          {/* Name Element */}
+          <h1
+            className="name text-white text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase whitespace-nowrap"
+            style={{
+              clipPath: 'inset(100% 0 0 0)',
+              animation: 'revealName 1s ease-out 1s forwards',
+            }}
           >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
-      </motion.div>
+            William Aldredge Neild
+          </h1>
+        </div>
 
-      {/* Typing Subheader */}
-      {!isCompact && (
+        {/* Typewriter Subheader */}
         <div
-          style={{
-            marginTop: "1rem",
-            fontFamily: '"Fira Code", "Courier New", monospace',
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "white",
-            minHeight: "2rem",
-            textAlign: "center",
-          }}
+          className="typewriter text-white font-mono text-xl font-bold opacity-0"
+          style={{ animation: 'fadeInTypewriter 0.6s ease-out 2.2s forwards' }}
         >
           <Typewriter
             words={words}
-            loop={false}
-            cursor
+            loop={1}
+            cursor={showCursor}
             cursorStyle="_"
             typeSpeed={80}
             deleteSpeed={50}
             delaySpeed={1000}
+            onLoopDone={() => setShowCursor(false)}
           />
         </div>
-      )}
-    </motion.div>
-  );
-};
+      </div>
 
-export default IntroAnimation;
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Fira+Code&display=swap');
+
+        .reveal-container {
+          width: max-content;
+          height: 4rem;
+          overflow: hidden;
+          position: relative;
+        }
+
+        /* Line Animations */
+        .line {
+          width: 0;
+        }
+        @keyframes fadeInLine {
+          from { opacity: 0; width: 0; }
+          to   { opacity: 1; width: 100%; }
+        }
+        @keyframes sitDelay {
+          to { opacity: 1; }
+        }
+        @keyframes moveUpLine {
+          from { transform: translateX(-50%) translateY(0); }
+          to   { transform: translateX(-50%) translateY(calc(-4rem + 2px)); }
+        }
+        @keyframes collapseLine {
+          from { width: 100%; opacity: 1; }
+          to   { width: 0; opacity: 0; }
+        }
+
+        /* Name Reveal */
+        .name {
+          font-family: 'Lora', serif;
+        }
+        @keyframes revealName {
+          from { clip-path: inset(100% 0 0 0); }
+          to   { clip-path: inset(0 0 0 0); }
+        }
+
+        /* Typewriter Fade-in */
+        @keyframes fadeInTypewriter {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}
