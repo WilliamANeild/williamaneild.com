@@ -3,71 +3,49 @@
 import { useEffect } from "react";
 import IntroAnimation from "./IntroAnimation";
 import Header from "./header";
+import AboutMe from "./about";
 import ExperienceSection from "./ExperienceSection";
 import Footer from "./footer";
-import AboutMe from "./about";
 
 export default function Home() {
-  // Handle tab visibility change
+  // Tab visibility logic
   useEffect(() => {
     const originalTitle = document.title;
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        document.title = "👋 Come back soon!";
-      } else {
-        document.title = originalTitle;
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
+    function onVisChange() {
+      document.title = document.hidden ? "👋 Come back soon!" : originalTitle;
+    }
+    document.addEventListener("visibilitychange", onVisChange);
+    return () => document.removeEventListener("visibilitychange", onVisChange);
   }, []);
 
-  // Optional: Smooth scroll behavior
+  // Smooth scroll logic
   useEffect(() => {
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", (e) => {
-        e.preventDefault();
-        const targetId = anchor.getAttribute("href");
-        if (targetId) {
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            targetElement.scrollIntoView({ behavior: "smooth" });
-          }
-        }
-      });
-    });
-
-    return () => {
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.removeEventListener("click", () => {});
-      });
-    };
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    function onClick(e: Event) {
+      e.preventDefault();
+      const id = (e.currentTarget as HTMLAnchorElement).getAttribute("href")!;
+      document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+    anchors.forEach((a) => a.addEventListener("click", onClick));
+    return () => anchors.forEach((a) => a.removeEventListener("click", onClick));
   }, []);
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      {/* HEADER */}
+    <div className="relative text-white">
+      {/* 1. Full-screen NYC Hero */}
       <Header />
+      <IntroAnimation />
 
-      {/* MAIN CONTENT */}
-      <main>
-        {/* INTRO ANIMATION */}
-        <IntroAnimation />
-
-        {/* ABOUT ME */}
+      {/* 2. Content + Dark-to-Black Ombre Gradient */}
+      <div
+        style={{
+          background: "linear-gradient(to bottom, #2f2f2f 0%, #000000 100%)",
+        }}
+      >
         <AboutMe />
-
-        {/* EXPERIENCE SECTION */}
         <ExperienceSection />
-      </main>
-
-      {/* FOOTER */}
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 }

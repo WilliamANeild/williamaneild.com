@@ -58,7 +58,7 @@ const ExperienceCard = ({ id, title, year, imageSrc, imageAlt }: any) => {
 // Main Experience Section
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="min-h-screen bg-black text-white py-20 px-6">
+    <section id="experience" className="min-h-screen text-white py-20 px-6">
       <div className="container mx-auto max-w-4xl">
         {/* Heading */}
         <h2 className="text-5xl font-mono font-bold tracking-wide text-center mb-12">Experience</h2>
@@ -66,7 +66,7 @@ export default function ExperienceSection() {
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {experiences.map((experience) => (
-            <ExperienceCard {...experience} />
+            <ExperienceCard key={experience.id} {...experience} />
           ))}
         </div>
       </div>

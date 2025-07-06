@@ -5,12 +5,11 @@ import Image from 'next/image';
 import { Typewriter } from 'react-simple-typewriter';
 
 const words = [
-  'Economics',
+  '',
   'Economics',
   'Mathematics',
   'Computer Science',
-  'Quantitative',
-  'Finance',
+  'Quantitative Finance',
   'Excellence',
 ];
 
