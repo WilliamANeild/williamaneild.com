@@ -1,76 +1,49 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 const sections = {
   about: [
     { id: "professional", label: "Professional" },
-    { id: "academic", label: "Academic" },
-    { id: "personal", label: "Personal" },
+    { id: "academic",     label: "Academic"     },
+    { id: "personal",     label: "Personal"     },
   ],
   experience: [
-    { id: "deepfile", label: "DeepFile" },
-    { id: "algory", label: "Algory Capital" },
-    { id: "mccamish", label: "McCamish Group" },
+    { id: "deepfile",    label: "DeepFile"       },
+    { id: "algory",      label: "Algory Capital" },
+    { id: "mccamish",    label: "McCamish Group" },
   ],
 };
 
-const Header = () => {
-  const [headerOpacity, setHeaderOpacity] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [experienceOpen, setExperienceOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+export default function Header() {
+  const [opacity, setOpacity] = useState(0);
 
-  // Handle outside click
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false);
-        setAboutOpen(false);
-        setExperienceOpen(false);
-      }
-    };
-
-    if (menuOpen) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuOpen]);
-
-  // Handle scroll opacity
-  useEffect(() => {
-    const handleScroll = () => {
+    const onScroll = () => {
       const threshold = window.innerHeight * 0.8;
-      const scrollY = window.scrollY;
-      const opacity = Math.min(Math.max((scrollY - threshold + 100) / 200, 0), 1);
-      setHeaderOpacity(opacity);
+      const y = window.scrollY;
+      setOpacity(Math.min(Math.max((y - threshold + 100) / 200, 0), 1));
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll to section
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-    setMenuOpen(false);
-    setAboutOpen(false);
-    setExperienceOpen(false);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <header
-      className="fixed top-0 left-0 w-full z-50 bg-black text-white px-6 py-3 transition-opacity duration-300"
-      style={{ opacity: headerOpacity, pointerEvents: headerOpacity > 0.1 ? "auto" : "none" }}
+      className="fixed inset-x-0 top-0 z-50 bg-black text-white transition-opacity duration-300"
+      style={{ opacity, pointerEvents: opacity > 0.1 ? "auto" : "none" }}
     >
-      <div className="flex justify-between items-center">
-        {/* Logo */}
+      <div className="flex items-center justify-between w-full px-6 py-3">
+        {/* Logo on far left */}
         <button
-          aria-label="Scroll to top"
+          aria-label="Home"
           onClick={() => scrollTo("intro")}
-          className="flex items-center bg-transparent border-none cursor-pointer"
+          className="flex-shrink-0"
         >
           <img
             src="/LiamLogo.png"
@@ -80,118 +53,67 @@ const Header = () => {
           />
         </button>
 
-        {/* Centered Name */}
-        <button
-          className="text-xl font-mono font-bold cursor-pointer bg-transparent border-none tracking-wider uppercase"
-          onClick={() => scrollTo("intro")}
-          aria-label="Scroll to top"
-        >
-          William Aldredge Neild
-        </button>
-
-        {/* Hamburger Menu */}
-        <div className="relative" ref={menuRef}>
+        {/* Name dead-center */}
+        <div className="absolute left-1/2 transform -translate-x-1/2">
           <button
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            onClick={() => setMenuOpen((v) => !v)}
-            className="flex flex-col justify-between w-6 h-6 focus:outline-none"
-            aria-expanded={menuOpen}
+            onClick={() => scrollTo("intro")}
+            className="text-lg font-lora font-semibold tracking-wide uppercase hover:text-gray-300"
           >
-            <span
-              className={`block h-0.5 bg-white rounded transition-transform ${
-                menuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            />
-            <span
-              className={`block h-0.5 bg-white rounded transition-opacity ${menuOpen ? "opacity-0" : "opacity-100"}`}
-            />
-            <span
-              className={`block h-0.5 bg-white rounded transition-transform ${
-                menuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            />
+            William Aldredge Neild
+          </button>
+        </div>
+
+        {/* Nav on far right */}
+        <nav className="flex items-center space-x-8">
+          <button
+            onClick={() => scrollTo("intro")}
+            className="font-lora hover:text-gray-300"
+          >
+            Home
           </button>
 
-          {/* Dropdown Menu */}
-          {menuOpen && (
-            <nav
-              className="absolute right-0 mt-2 w-48 bg-black border border-gray-700 rounded shadow-lg font-sans text-white text-sm"
-              role="menu"
-            >
-              {/* About Me */}
-              <div>
-                <button
-                  onClick={() => setAboutOpen((v) => !v)}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-900 flex justify-between items-center"
-                  aria-expanded={aboutOpen}
-                >
-                  About Me
-                  <span
-                    className={`transform transition-transform ${aboutOpen ? "rotate-90" : ""}`}
+          {/* About dropdown */}
+          <div className="relative group">
+            <button className="font-lora hover:text-gray-300">About</button>
+            <ul className="absolute left-0 top-full mt-1 w-44 bg-black border border-gray-700 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+              {sections.about.map(({ id, label }) => (
+                <li key={id}>
+                  <button
+                    onClick={() => scrollTo(id)}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-900"
                   >
-                    ▶
-                  </span>
-                </button>
-                {aboutOpen && (
-                  <div className="pl-6">
-                    {sections.about.map(({ id, label }) => (
-                      <button
-                        key={id}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-900"
-                        onClick={() => scrollTo(id)}
-                        role="menuitem"
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              {/* Experience */}
-              <div>
-                <button
-                  onClick={() => setExperienceOpen((v) => !v)}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-900 flex justify-between items-center"
-                  aria-expanded={experienceOpen}
-                >
-                  Experience
-                  <span
-                    className={`transform transition-transform ${experienceOpen ? "rotate-90" : ""}`}
+          {/* Experience dropdown */}
+          <div className="relative group">
+            <button className="font-lora hover:text-gray-300">Experience</button>
+            <ul className="absolute left-0 top-full mt-1 w-44 bg-black border border-gray-700 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+              {sections.experience.map(({ id, label }) => (
+                <li key={id}>
+                  <button
+                    onClick={() => scrollTo(id)}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-900"
                   >
-                    ▶
-                  </span>
-                </button>
-                {experienceOpen && (
-                  <div className="pl-6">
-                    {sections.experience.map(({ id, label }) => (
-                      <button
-                        key={id}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-900"
-                        onClick={() => scrollTo(id)}
-                        role="menuitem"
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              {/* Contact */}
-              <button
-                onClick={() => scrollTo("contact")}
-                className="w-full text-left px-4 py-2 hover:bg-gray-900 border-t border-gray-700"
-                role="menuitem"
-              >
-                Contact
-              </button>
-            </nav>
-          )}
-        </div>
+          <button
+            onClick={() => scrollTo("contact")}
+            className="font-lora hover:text-gray-300"
+          >
+            Contact
+          </button>
+        </nav>
       </div>
     </header>
   );
-};
-
-export default Header;
+}
