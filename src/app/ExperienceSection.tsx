@@ -36,7 +36,27 @@ const experiences = [
   },
 ];
 
-const ExperienceCard = ({ id, title, year, location, role, bgSrc, logoSrc, alt }: any) => (
+interface ExperienceCardProps {
+  id: string;
+  title: string;
+  year: string;
+  location: string;
+  role: string;
+  bgSrc: string;
+  logoSrc: string;
+  alt: string;
+}
+
+const ExperienceCard = ({
+  id,
+  title,
+  year,
+  location,
+  role,
+  bgSrc,
+  logoSrc,
+  alt,
+}: ExperienceCardProps) => (
   <Link
     href={`/${id}`}
     className="bg-white text-black rounded-3xl overflow-hidden shadow-xl flex-none w-80 transform transition-transform duration-300 hover:scale-95 flex flex-col"
@@ -76,7 +96,7 @@ export default function ExperienceSection() {
           Experience
         </h2>
         <div className="flex space-x-6 justify-center overflow-x-auto pb-4">
-          {experiences.map(exp => (
+          {experiences.map((exp) => (
             <ExperienceCard key={exp.id} {...exp} />
           ))}
         </div>
