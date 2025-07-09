@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className="text-white min-h-screen font-lora pt-16 px-8">
       {/* Page Header */}
-      <h1 className="text-6xl font-lora font-bold tracking-wide text-center mb-10">
+      <h1 className="text-5xl font-lora font-bold tracking-wide text-center mb-10">
         About Me
       </h1>
 
@@ -12,9 +12,9 @@ export default function About() {
         {/* Professionally Section */}
         <Section id="professional">
           <SectionTitle>Professionally</SectionTitle>
-          <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
             <ImageSlideIn direction="left" delay={0.2}>
-              <Image src="/AboutMeImage.webp" alt="Professional Headshot" />
+              <ImageStyled src="/AboutMeImage.webp" alt="Professional Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
@@ -27,9 +27,9 @@ export default function About() {
         {/* Academically Section */}
         <Section id="academic">
           <SectionTitle>Academically</SectionTitle>
-          <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
             <ImageSlideIn direction="left" delay={0.2}>
-              <Image src="/LiamNeildAlgoryPMheadshot.png" alt="Academic Headshot" />
+              <ImageStyled src="/LiamNeildAlgoryPMheadshot.png" alt="Academic Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
@@ -42,9 +42,9 @@ export default function About() {
         {/* Personally Section */}
         <Section id="personal">
           <SectionTitle>Personally</SectionTitle>
-          <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
             <ImageSlideIn direction="left" delay={0.2}>
-              <Image src="/PersonallyImage.JPG" alt="Personal Headshot" />
+              <ImageStyled src="/PersonallyImage.JPG" alt="Personal Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
@@ -58,7 +58,6 @@ export default function About() {
   );
 }
 
-// Reusable Section Component (with scroll animation)
 function Section({ id, children }: { id: string; children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -82,8 +81,8 @@ function Section({ id, children }: { id: string; children: ReactNode }) {
     <section
       ref={ref}
       id={id}
-      className={`py-16 px-0 transition-all duration-1000 transform ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+      className={`py-12 px-0 transition-all duration-1000 transform ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
       }`}
     >
       {children}
@@ -91,7 +90,6 @@ function Section({ id, children }: { id: string; children: ReactNode }) {
   );
 }
 
-// Animated Section Title with Line Draw Effect
 function SectionTitle({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLHeadingElement>(null);
   const [isDrawn, setIsDrawn] = useState(false);
@@ -114,8 +112,8 @@ function SectionTitle({ children }: { children: ReactNode }) {
   return (
     <h2
       ref={ref}
-      className={`text-5xl font-lora font-bold mb-6 inline-block tracking-wide opacity-0 transition-all duration-700 ${
-        isDrawn ? 'opacity-100 translate-y-0' : 'translate-y-1'
+      className={`text-3xl font-lora font-bold mb-4 inline-block tracking-wide opacity-0 transition-all duration-700 ${
+        isDrawn ? "opacity-100 translate-y-0" : "translate-y-1"
       }`}
     >
       {children}
@@ -145,16 +143,6 @@ function SectionTitle({ children }: { children: ReactNode }) {
   );
 }
 
-// Reusable Image Component (portrait sizing)
-function Image({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="relative w-full md:w-80 h-[30rem] rounded-lg overflow-hidden shadow-lg">
-      <img src={src} alt={alt} className="object-cover w-full h-full" />
-    </div>
-  );
-}
-
-// Slide-In Animation Wrapper
 function ImageSlideIn({ children, direction = "left", delay = 0 }: { children: ReactNode; direction?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -174,13 +162,13 @@ function ImageSlideIn({ children, direction = "left", delay = 0 }: { children: R
     return () => observer.disconnect();
   }, []);
 
-  const translateClass = direction === "left" ? '-translate-x-8' : 'translate-x-8';
+  const translateClass = direction === "left" ? "-translate-x-8" : "translate-x-8";
 
   return (
     <div
       ref={ref}
       className={`transform transition-all duration-700 ease-out ${
-        isVisible ? 'translate-x-0 opacity-100' : `${translateClass} opacity-0`
+        isVisible ? "translate-x-0 opacity-100" : `${translateClass} opacity-0`
       }`}
       style={{ transitionDelay: `${delay}s` }}
     >
@@ -189,7 +177,6 @@ function ImageSlideIn({ children, direction = "left", delay = 0 }: { children: R
   );
 }
 
-// Fade-Up Animation Wrapper
 function TextFadeUp({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -213,7 +200,7 @@ function TextFadeUp({ children, delay = 0 }: { children: ReactNode; delay?: numb
     <div
       ref={ref}
       className={`opacity-0 transition-all duration-700 translate-y-2 ${
-        isVisible ? 'opacity-100 translate-y-0' : ''
+        isVisible ? "opacity-100 translate-y-0" : ""
       }`}
       style={{ transitionDelay: `${delay}s` }}
     >
@@ -222,7 +209,18 @@ function TextFadeUp({ children, delay = 0 }: { children: ReactNode; delay?: numb
   );
 }
 
-// Animated Paragraph Component
 function Paragraph({ children }: { children: ReactNode }) {
-  return <p className="text-2xl font-lora font-medium leading-snug text-gray-300 mb-4">{children}</p>;
+  return <p className="text-[1.2rem] font-lora font-medium leading-snug text-gray-300 mb-4">{children}</p>;
+}
+
+function ImageStyled({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative w-full md:w-64 h-[20rem] rounded-lg overflow-hidden transition-opacity duration-700 ease-in shadow-[0_4px_20px_rgba(255,255,255,0.1)] border border-gray-500 border-opacity-30">
+      <img
+        src={src}
+        alt={alt}
+        className="object-cover w-full h-full"
+      />
+    </div>
+  );
 }

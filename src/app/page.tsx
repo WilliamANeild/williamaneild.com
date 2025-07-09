@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const originalTitle = document.title;
     function onVisChange() {
-      document.title = document.hidden ? "Come back soon!" : originalTitle;
+      document.title = document.hidden ? "Come back!" : originalTitle;
     }
     document.addEventListener("visibilitychange", onVisChange);
     return () => document.removeEventListener("visibilitychange", onVisChange);
