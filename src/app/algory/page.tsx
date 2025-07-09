@@ -48,21 +48,23 @@ export default function AlgoryPage() {
     <main className="min-h-screen p-6 bg-gradient-to-b from-gray-900 to-black text-white space-y-12">
       {/* Back Link */}
       <Link href="/#experience" className="block mb-6 text-gray-400 hover:text-white">
-        ← Back to Experience
+        ← Back
       </Link>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center gap-8">
-        <div className="w-40 h-40 relative">
+        {/* Logo container enlarged to match DeepFile */}
+        <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 relative flex-shrink-0">
           <Image
             src="/AlgoryLogo.jpg"
             alt="Algory Capital Logo"
             fill
             className="object-contain"
-            sizes="(max-width: 768px) 100vw, 160px"
+            sizes="(max-width: 768px) 100vw, 224px"
           />
         </div>
-        <div>
+        {/* Text shifted right to align with larger logo */}
+        <div className="md:ml-6 lg:ml-8">
           <h1 className="text-4xl font-mono font-bold mb-2">Algory Capital</h1>
           <p className="text-gray-500 mb-4">2025</p>
           <p className="text-lg leading-relaxed">
