@@ -37,7 +37,7 @@ export default function Layout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="William Aldredge Neild" />
         <meta property="og:title" content="William A. Neild" />
-        <meta property="og:description" content="Personal site for William(Liam) Neild" />
+        <meta property="og:description" content="Personal site for William (Liam) Neild" />
         <meta property="og:image" content="/PortfolioWebsiteImage1.png" />
         <meta property="og:type" content="website" />
       </head>
