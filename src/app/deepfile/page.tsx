@@ -9,6 +9,7 @@ import {
   useMsal,
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
+  // @ts-ignore
 } from "@azure/msal-react";
 
 // MSAL-based React component code

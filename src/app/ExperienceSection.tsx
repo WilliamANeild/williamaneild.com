@@ -31,7 +31,7 @@ const experiences = [
     location: "Atlanta, GA",
     role: "Investment Analyst",
     bgSrc: "/atl.jpg",
-    logoSrc: "/McCamishLogo.png",
+    logoSrc: "/McCamish2.png",
     alt: "McCamish Logo over Atlanta",
   },
 ];
@@ -59,7 +59,7 @@ const ExperienceCard = ({
 }: ExperienceCardProps) => (
   <Link
     href={`/${id}`}
-    className="bg-white text-black rounded-3xl overflow-hidden shadow-xl flex-none w-80 transform transition-transform duration-300 hover:scale-95 flex flex-col"
+    className="bg-white text-black rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(255,255,255,0.1)] border border-gray-500 border-opacity-30 flex-none w-80 transform transition-transform duration-300 hover:scale-95 flex flex-col"
   >
     {/* Image Section */}
     <div className="relative w-full aspect-[3/4]">

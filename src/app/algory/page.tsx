@@ -111,7 +111,7 @@ export default function AlgoryPage() {
               />
             </div>
             <p className="text-center text-gray-400 py-2">
-              Viewing slide {pageNumber}
+              Presentation Slides
             </p>
           </div>
         </div>

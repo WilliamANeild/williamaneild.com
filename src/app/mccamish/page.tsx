@@ -15,7 +15,7 @@ export default function McCamishContent() {
       {/* Header & Intro */}
       <div className="flex flex-col md:flex-row items-center gap-8">
         <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 relative flex-shrink-0">
-          <Image src="/McCamishLogo.png" alt="McCamish Group Logo" fill className="object-contain" />
+          <Image src="/McCamish2.png" alt="McCamish Group Logo" fill className="object-contain" />
         </div>
         <div className="md:ml-6 lg:ml-8 flex-1">
           <h1 className="text-4xl font-bold">The McCamish Group</h1>
