@@ -37,13 +37,10 @@ const apiCode = `from fastapi import APIRouter, HTTPException
 # ...rest of snippet omitted for brevity
 `;
 
-export default function DeepFilePage({ msalInstance }: { msalInstance?: unknown }) {
+export default function DeepFilePage() {
   useEffect(() => {
-    if (typeof msalInstance === "object" && msalInstance !== null && "initialize" in msalInstance) {
-      // @ts-expect-error dynamic call
-      msalInstance.initialize();
-    }
-  }, [msalInstance]);
+    // No props; initialization removed
+  }, []);
 
   return (
     <main className="min-h-screen p-6 bg-gradient-to-b from-gray-900 to-black text-white space-y-12">
@@ -96,5 +93,5 @@ export default function DeepFilePage({ msalInstance }: { msalInstance?: unknown 
         </div>
       </div>
     </main>
-);
+  );
 }
