@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-// MSAL-based React component code
+// MSAL-based React component code (for display only)
 const msalCode = `import React, { useState } from "react";
 import { useMsal, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import { openFilePickerPersonal } from "../lib/msal/personal";
@@ -29,119 +29,20 @@ function MsalContent() {
     setFiles(enriched);
   };
 
-  const handlePersonal = () => {
-    const accounts = instance.getAllAccounts();
-    if (!accounts.some(checkPersonalAccount)) {
-      instance.loginPopup({
-        redirectUri: window.location.origin + "/",
-        scopes: msalPersonalScopes,
-        authority: msalConsumerAuthority,
-      });
-    }
-  };
-
-  const handleOrg = () => {
-    const accounts = instance.getAllAccounts();
-    if (!accounts.some(checkOrgAccount)) {
-      instance.loginPopup({
-        redirectUri: window.location.origin + "/",
-        scopes: msalOrgScopes,
-        authority: msalOrgAuthority,
-      });
-    }
-  };
-
-  const handleOpen = () => {
-    const accounts = instance.getAllAccounts();
-    if (accounts.some(checkPersonalAccount)) {
-      openFilePickerPersonal(instance, handlePicked);
-    } else {
-      openFilePickerOrg(instance, handlePicked);
-    }
-  };
-
-  const handleUpload = () => {
-    files.forEach((f) => {
-      axios
-        .post("/sharepoint/uploadFile", {
-          file_name: f.name,
-          url: f.downloadUrl,
-          ID: f.id,
-        })
-        .then((res) => console.log(res.data))
-        .catch(console.error);
-    });
-  };
-
-  return (
-    <div>
-      <UnauthenticatedTemplate>
-        <button onClick={handlePersonal} className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded mr-2">
-          Connect Personal OneDrive
-        </button>
-        <button onClick={handleOrg} className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded">
-          Connect SharePoint (Org)
-        </button>
-      </UnauthenticatedTemplate>
-
-      <AuthenticatedTemplate>
-        <button onClick={handleOpen} className="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded mr-2">
-          Open File Picker
-        </button>
-        {files.length > 0 && (
-          <button onClick={handleUpload} className="px-3 py-1 bg-green-600 hover:bg-green-500 rounded">
-            Upload {files.length} File{files.length > 1 ? "s" : ""}
-          </button>
-        )}
-        <pre className="mt-4 bg-gray-800 p-4 rounded max-h-60 overflow-auto text-sm">
-          {JSON.stringify(files, null, 2)}
-        </pre>
-      </AuthenticatedTemplate>
-    </div>
+  // ...rest of snippet omitted for brevity
 }`;
 
-// FastAPI endpoint code
+// FastAPI endpoint code (for display only)
 const apiCode = `from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-import requests
-import boto3
-from io import BytesIO
-from app.connectors.microsoft import MicrosoftOAuth2Service
-
-router = APIRouter(prefix="/sharepoint", tags=["sharepoint"])
-S3 = boto3.client("s3")
-BUCKET = "deepfile-dev-wn"
-
-class SharePointFileRequest(BaseModel):
-    file_name: str
-    url: str
-    ID: str
-
-@router.get("/test")
-def login():
-    return MicrosoftOAuth2Service().get_token()
-
-@router.post("/uploadFile")
-def upload_file(req: SharePointFileRequest):
-    token = MicrosoftOAuth2Service().get_token()
-    if not token:
-        raise HTTPException(401, "Could not acquire Microsoft token")
-
-    resp = requests.get(req.url, headers={"Authorization": f"Bearer {token}"})
-    if resp.status_code != 200:
-        raise HTTPException(resp.status_code, f"Download failed: {req.url}")
-
-    try:
-        S3.upload_fileobj(BytesIO(resp.content), BUCKET, req.file_name)
-    except Exception as e:
-        raise HTTPException(500, f"S3 upload error: {e}")
-
-    return {"message": f"Uploaded {req.file_name}"}
+# ...rest of snippet omitted for brevity
 `;
 
-export default function DeepFilePage({ msalInstance }: { msalInstance?: any }) {
+export default function DeepFilePage({ msalInstance }: { msalInstance?: unknown }) {
   useEffect(() => {
-    if (msalInstance?.initialize) msalInstance.initialize();
+    if (typeof msalInstance === "object" && msalInstance !== null && "initialize" in msalInstance) {
+      // @ts-expect-error dynamic call
+      msalInstance.initialize();
+    }
   }, [msalInstance]);
 
   return (
@@ -160,7 +61,7 @@ export default function DeepFilePage({ msalInstance }: { msalInstance?: any }) {
           <h1 className="text-4xl font-bold">DeepFile</h1>
           <p className="text-gray-500 mt-1 mb-4">2025</p>
           <div className="text-lg leading-relaxed">
-            At DeepFile, I focused on solving a core product challenge: identifying and fixing inconsistencies in the platform’s file selection logic. My work involved tracing why documents were misclassified or surfaced randomly and proposing deterministic selection criteria based on semantic search and metadata interpretation. I contributed to the SharePoint connector integration, defining multi-user token storage and enabling personalized retrieval through document embedding and vector search. By internship’s end, I improved file discovery reliability and long-term knowledge integration architecture—making the product more usable, scalable, and precise.
+            At DeepFile, I focused on solving a core product challenge: identifying and fixing inconsistencies in the platform’s file selection logic…
           </div>
         </div>
       </div>
@@ -182,6 +83,7 @@ export default function DeepFilePage({ msalInstance }: { msalInstance?: any }) {
             </SyntaxHighlighter>
           </div>
         </div>
+
         <div className="bg-gray-800 rounded shadow overflow-hidden">
           <div className="px-4 py-2 bg-gray-900 border-b">
             <h2 className="text-lg font-semibold">FastAPI Upload Endpoint</h2>
@@ -194,5 +96,5 @@ export default function DeepFilePage({ msalInstance }: { msalInstance?: any }) {
         </div>
       </div>
     </main>
-  );
+);
 }
