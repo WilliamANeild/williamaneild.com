@@ -5,11 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import {
-  useMsal,
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-} from "@azure/msal-react";
 
 // MSAL-based React component code
 const msalCode = `import React, { useState } from "react";
@@ -22,7 +17,7 @@ import { msalPersonalScopes, msalOrgScopes, msalConsumerAuthority, msalOrgAuthor
 
 function MsalContent() {
   const { instance } = useMsal();
-  const [files, setFiles] = useState<any[]>([]);
+  const [files, setFiles] = useState<unknown[]>([]);
 
   const handlePicked = async (items: unknown[], token: string) => {
     const enriched = await Promise.all(
