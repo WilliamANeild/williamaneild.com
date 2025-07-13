@@ -34,7 +34,51 @@ function MsalContent() {
 
 // FastAPI endpoint code (for display only)
 const apiCode = `from fastapi import APIRouter, HTTPException
-# ...rest of snippet omitted for brevity
+from pydantic import BaseModel
+import requests
+from io import BytesIO
+from docx import Document
+
+router = APIRouter(prefix="/sharepoint", tags=["sharepoint"])
+
+# Replace with your actual S3 bucket name
+BUCKET_NAME = "deepfile-dev-wn"
+
+class SharePointFileRequest(BaseModel):
+    file_name: str
+    url: str
+    ID: str
+
+@router.post("/uploadFile")
+def upload_file(request: SharePointFileRequest):
+    print(f"File Name: {request.file_name}")
+    print(f"URL: {request.url}")
+    print(f"ID: {request.ID}")
+
+    # Step 1: Download the file from the provided URL (streaming)
+    file_ext = os.path.splitext(request.file_name)[1]
+    print(f"File extension: {file_ext}")
+    with requests.get(request.url, stream=True) as response:
+        if response.status_code != 200:
+            raise HTTPException(
+                status_code=response.status_code,
+                detail=f"Failed to download file from URL: {request.url}",
+            )
+        content = BytesIO()
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                content.write(chunk)
+        content.seek(0)
+
+        # Load the .docx file from memory
+        doc = Document(content)
+        for para in doc.paragraphs:
+            print(para.text)
+
+    # Step 2: (Optional) Upload to S3 or integrate with semantic indexing
+    # s3.upload_fileobj(BytesIO(response.content), BUCKET_NAME, request.file_name)
+
+    return {"message": f"Successfully processed {request.file_name}"}
 `;
 
 export default function DeepFilePage() {
@@ -58,7 +102,7 @@ export default function DeepFilePage() {
           <h1 className="text-4xl font-bold">DeepFile</h1>
           <p className="text-gray-500 mt-1 mb-4">2025</p>
           <div className="text-lg leading-relaxed">
-            At DeepFile, I focused on solving a core product challenge: identifying and fixing inconsistencies in the platform’s file selection logic…
+            At DeepFile, I focused on diagnosing and resolving a high-priority product issue: the platform’s file selection logic was returning inconsistent and sometimes irrelevant documents. I led an investigation into the indexing pipeline and semantic search stack, isolating the root causes within how embeddings were generated and how the cross-encoder reranking interacted with metadata filters. After mapping the architecture end to end, I redefined key stages of the file selection flow by adjusting how we parsed, embedded, and ranked documents. I worked closely with the CTO to validate improvements against a set of internal QA benchmarks. In parallel, I helped build out our SharePoint integration, which involved adding multi-user support, securely storing per-user access tokens using Fernet encryption, and developing logic to merge SharePoint documents with the platform's existing semantic search infrastructure. These contributions stabilized the product’s core behavior, enabled enterprise client use cases, and laid the groundwork for future LLM-driven document intelligence features.
           </div>
         </div>
       </div>

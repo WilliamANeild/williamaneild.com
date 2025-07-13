@@ -2,23 +2,23 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export default function About() {
   return (
-    <div className="text-white min-h-screen font-lora pt-16 px-8">
+    <div className="text-white min-h-screen font-lora py-32 px-3 md:px-10">
       {/* Page Header */}
-      <h1 className="text-5xl font-lora font-bold tracking-wide text-center mb-10">
+      <h1 className="text-5xl font-bold tracking-wide text-center mb-16">
         About Me
       </h1>
 
-      <div>
+      <div className="max-w-5xl mx-auto space-y-12">
         {/* Professionally Section */}
         <Section id="professional">
           <SectionTitle>Professionally</SectionTitle>
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
             <ImageSlideIn direction="left" delay={0.2}>
               <ImageStyled src="/AboutMeImage.webp" alt="Professional Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
-                I’m drawn to environments where pace, precision, and intellectual pressure are constant. I thrive when the work is quantitative, high-stakes, and demands both clarity of thought and flawless execution. My professional focus lies at the intersection of financial markets and advanced technology, where I’ve pursued roles that challenge my ability to reason under pressure, work with large-scale data, and deliver clean, effective solutions. I’m especially interested in quantitative finance, where performance is grounded in rigorous modeling, statistical edge, and scalable infrastructure. I’m motivated by firms that prioritize depth of thinking, efficient systems, and measurable outcomes. I care about making decisions that hold up under scrutiny and contribute directly to performance. Whether I’m analyzing signals, refining tools, or debugging systems, I bring a structured approach, a high level of accountability, and a mindset geared toward constant iteration. I value environments where smart people move fast, standards are uncompromising, and the goal is not just to be right, but to be repeatably right at scale.
+                I’m drawn to environments where pace, precision, and intellectual pressure are constant. I thrive when the work is quantitative, high-stakes, and demands clarity of thought and execution. My focus lies at the intersection of financial markets and advanced technology, where I take on roles that require reasoning under pressure, working with large data, and building clean, scalable solutions. I’m especially interested in quantitative finance, where edge comes from rigorous modeling, statistical insight, and strong infrastructure. I value depth of thinking, efficient systems, and making decisions that drive performance and hold up under scrutiny. I take a structured, iterative approach to solving problems, and I’m motivated by environments where standards are high and outcomes are measurable. Whether I’m debugging systems or refining models, I prioritize speed, clarity, and results.
               </Paragraph>
             </TextFadeUp>
           </div>
@@ -27,13 +27,13 @@ export default function About() {
         {/* Academically Section */}
         <Section id="academic">
           <SectionTitle>Academically</SectionTitle>
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
             <ImageSlideIn direction="left" delay={0.2}>
               <ImageStyled src="/LiamNeildAlgoryPMheadshot.png" alt="Academic Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
-                I’m pursuing a B.S. in Computer Science and a joint B.A. in Economics and Mathematics at Emory University. My academic work is centered on quantitative methods, systems thinking, and the practical application of theory to financial markets. I approach my coursework with an analytical mindset, whether I’m studying algorithms, probability theory, or macroeconomic models. I’ve chosen a curriculum that pushes me to work across disciplines, combining technical fluency with economic intuition and mathematical structure. Outside the classroom, I’ve sought out environments that reinforce these skills through applied research and team-driven problem solving. At Algory Capital, I progressed from quantitative researcher to portfolio manager, where I led volatility-based equity and options strategies and built cointegration-driven pair trading models using historical relationships between assets. On campus, I serve as a Team Lead at the Emory Economics Investment Forum, where I guide public equity research in the healthcare and biotech sectors. I also contribute to RISE by evaluating stock pitches and supporting the financial modeling process. These experiences have taught me how to turn data into insight, theory into structure, and ideas into disciplined outcomes, all within a framework of collaboration, intellectual rigor, and continuous learning.
+                I’m pursuing a B.S. in Computer Science and a joint B.A. in Economics and Mathematics at Emory University, with a focus on quantitative methods and systems thinking. My coursework spans algorithms, probability, and macroeconomic theory, all approached through an analytical lens. I’ve built a curriculum that blends technical depth with economic reasoning and mathematical structure. Outside the classroom, I apply these skills through research and team-driven projects. At Algory Capital, I advanced from quant researcher to portfolio manager, leading volatility-based strategies and developing cointegration-driven pair trades. I also lead equity research in healthcare and biotech at the Emory Economics Investment Forum and support financial modeling at RISE. These experiences have sharpened my ability to turn theory into structure and data into actionable insights.
               </Paragraph>
             </TextFadeUp>
           </div>
@@ -42,13 +42,13 @@ export default function About() {
         {/* Personally Section */}
         <Section id="personal">
           <SectionTitle>Personally</SectionTitle>
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
             <ImageSlideIn direction="left" delay={0.2}>
               <ImageStyled src="/PersonallyImage.JPG" alt="Personal Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
-                Outside academics and finance, I serve as Social Chair for the SAE fraternity, where I lead event planning and focus on creating a culture that values connection, energy, and respect. I enjoy bringing people together in ways that feel intentional, whether it’s organizing formal events or building the kind of day-to-day atmosphere that makes a team stronger. I’ve found that strong communities don’t happen by accident—they’re built through consistency, effort, and small details that make people feel welcome. Staying active is also a big part of my routine. I play tennis and squash regularly and appreciate the focus and competitiveness both sports demand. Golf and Texas Hold’em are two activities I turn to when I want to slow down and think more strategically, while still staying engaged and social. I’m also passionate about grilling, which for me is as much about hosting as it is about the food. It gives me the chance to set the tone, create a space where people feel comfortable, and make time with friends more personal. Whether I’m competing, relaxing, or bringing people together, I care about doing things with purpose and surrounding myself with people who think the same way.
+                Outside the professional and academic track, I care about how people come together, how energy is set in a room, and how shared experiences build stronger teams. I think culture is something you design, not something that just happens. Outside academics and finance, I serve as Social Chair for the SAE fraternity, where I lead event planning and focus on building a culture of connection, energy, and respect. I enjoy creating environments that feel intentional, whether through formal events or everyday moments that strengthen teams and friendships. I believe strong communities come from consistency and attention to detail. I stay active through tennis and squash, both of which keep me sharp and competitive. When I want to slow down, I turn to golf or Texas Hold’em for strategic focus and social connection. I also love grilling, not just for the food but for the opportunity to host and make time with friends more personal and deliberate.
               </Paragraph>
             </TextFadeUp>
           </div>
@@ -112,7 +112,7 @@ function SectionTitle({ children }: { children: ReactNode }) {
   return (
     <h2
       ref={ref}
-      className={`text-3xl font-lora font-bold mb-4 inline-block tracking-wide opacity-0 transition-all duration-700 ${
+      className={`relative text-3xl font-lora font-bold mb-4 inline-block tracking-wide opacity-0 transition-all duration-700 ${
         isDrawn ? "opacity-100 translate-y-0" : "translate-y-1"
       }`}
     >
@@ -215,7 +215,7 @@ function Paragraph({ children }: { children: ReactNode }) {
 
 function ImageStyled({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="relative w-full md:w-64 h-[20rem] rounded-lg overflow-hidden transition-opacity duration-700 ease-in shadow-[0_4px_20px_rgba(255,255,255,0.1)] border border-gray-500 border-opacity-30">
+    <div className="relative w-full md:w-72 h-[22rem] rounded-lg overflow-hidden transition-opacity duration-700 ease-in shadow-[0_4px_20px_rgba(255,255,255,0.1)] border border-gray-500 border-opacity-30">
       <img
         src={src}
         alt={alt}
