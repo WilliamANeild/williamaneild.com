@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Typewriter } from 'react-simple-typewriter';
 
 const words = [
-  '',
+  'blank',
   'Economics',
   'Mathematics',
   'Computer Science',
@@ -31,7 +31,7 @@ export default function IntroAnimation() {
       </div>
 
       {/* Reveal Container + Typewriter */}
-      <div className="flex flex-col items-center space-y-4 z-10">
+      <div className="flex flex-col items-center space-y-4 z-10 px-4 text-center">
         <div className="reveal-container relative inline-block overflow-hidden">
           {/* Animated Line */}
           <div
@@ -48,7 +48,7 @@ export default function IntroAnimation() {
 
           {/* Name Element */}
           <h1
-            className="name text-white text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase whitespace-nowrap"
+            className="name text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase whitespace-nowrap"
             style={{
               clipPath: 'inset(100% 0 0 0)',
               animation: 'revealName 1s ease-out 1s forwards',
@@ -60,7 +60,7 @@ export default function IntroAnimation() {
 
         {/* Typewriter Subheader */}
         <div
-          className="typewriter text-white font-mono text-xl font-bold opacity-0"
+          className="typewriter text-white font-mono text-base sm:text-lg md:text-xl font-bold opacity-0"
           style={{ animation: 'fadeInTypewriter 0.6s ease-out 2.2s forwards' }}
         >
           <Typewriter

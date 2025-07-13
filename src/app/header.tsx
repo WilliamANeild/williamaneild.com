@@ -43,7 +43,7 @@ export default function Header() {
       className="fixed inset-x-0 top-0 z-50 bg-black text-white transition-opacity duration-300 font-lora"
       style={{ opacity, pointerEvents: opacity > 0.1 ? "auto" : "none" }}
     >
-      <div className="flex items-center justify-between w-full px-6 py-3">
+      <div className="flex items-center justify-between w-full px-4 sm:px-6 py-3">
         {/* Logo on far left */}
         <button
           aria-label="Home"
@@ -59,17 +59,17 @@ export default function Header() {
         </button>
 
         {/* Name dead-center */}
-        <div className="absolute left-1/2 transform -translate-x-1/2">
+        <div className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
           <button
             onClick={() => scrollTo("intro")}
-            className="text-lg font-semibold tracking-wide uppercase hover:text-gray-300"
+            className="text-base sm:text-lg font-semibold tracking-wide uppercase hover:text-gray-300"
           >
             William Aldredge Neild
           </button>
         </div>
 
-        {/* Nav on far right */}
-        <nav className="flex items-center space-x-8">
+        {/* Nav on far right (hidden on small screens) */}
+        <nav className="hidden sm:flex items-center space-x-4 sm:space-x-8">
           <button
             onClick={() => scrollTo("intro")}
             className="hover:text-gray-300"
