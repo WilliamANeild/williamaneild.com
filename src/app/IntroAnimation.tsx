@@ -33,7 +33,7 @@ export default function IntroAnimation() {
 
   // Normalized scroll progress
   const progress = typeof window !== 'undefined' ? Math.min(scrollY / window.innerHeight, 1) : 0;
-  const reflectionTranslate = 175 + scrollY * 2.2;
+  const reflectionTranslate = 200 + scrollY * 2.2;
 
   return (
     <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-black font-sans">
