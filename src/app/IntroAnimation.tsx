@@ -80,20 +80,20 @@ export default function IntroAnimation() {
 
         {/* Typewriter Subheader */}
         <div
-          className="typewriter text-white font-mono text-base sm:text-lg md:text-xl font-bold opacity-0"
-          style={{ animation: 'fadeInTypewriter 0.6s ease-out 2.2s forwards' }}
-        >
-          <Typewriter
-            words={words}
-            loop={1}
-            cursor={showCursor}
-            cursorStyle="_"
-            typeSpeed={80}
-            deleteSpeed={50}
-            delaySpeed={1000}
-            onLoopDone={() => setShowCursor(false)}
-          />
-        </div>
+        className="typewriter text-white font-bold text-base sm:text-lg md:text-xl opacity-0"
+        style={{ fontFamily: 'Lora, serif', animation: 'fadeInTypewriter 0.6s ease-out 2.2s forwards' }}
+      >
+        <Typewriter
+          words={words}
+          loop={1}
+          cursor={showCursor}
+          cursorStyle="_"
+          typeSpeed={80}
+          deleteSpeed={50}
+          delaySpeed={1000}
+          onLoopDone={() => setShowCursor(false)}
+        />
+      </div>
       </div>
 
       {/* Reflection of Name */}
