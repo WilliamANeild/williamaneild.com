@@ -29,7 +29,7 @@ export default function About() {
           <SectionTitle>Academically</SectionTitle>
           <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
             <ImageSlideIn direction="left" delay={0.2}>
-              <ImageStyled src="/LiamNeildAlgoryPMheadshot.png" alt="Academic Headshot" />
+              <ImageStyled src="/aca.jpg" alt="Academic Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
