@@ -36,7 +36,7 @@ export default function IntroAnimation() {
   const reflectionTranslate = 200 + scrollY * 2.2;
 
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-black font-sans">
+    <div className="relative w-screen min-h-screen flex items-center justify-center overflow-hidden bg-black font-sans px-2 sm:px-4 safe-top safe-bottom">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -51,8 +51,8 @@ export default function IntroAnimation() {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center space-y-4 z-10 px-4 text-center">
-        <div className="reveal-container relative inline-block overflow-hidden">
+      <div className="flex flex-col items-center space-y-4 z-10 text-center max-w-[90vw]">
+        <div className="reveal-container relative inline-block overflow-hidden w-full">
           {/* Animated Line */}
           <div
             className="line absolute top-full left-1/2 h-[2px] bg-white origin-center"
@@ -68,7 +68,7 @@ export default function IntroAnimation() {
 
           {/* Name Reveal */}
           <h1
-            className="name text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase whitespace-nowrap"
+            className="name text-white font-extrabold uppercase w-full whitespace-normal text-[8vw] sm:text-4xl md:text-5xl lg:text-6xl"
             style={{
               clipPath: 'inset(100% 0 0 0)',
               animation: 'revealName 1s ease-out 1s forwards',
@@ -80,26 +80,26 @@ export default function IntroAnimation() {
 
         {/* Typewriter Subheader */}
         <div
-        className="typewriter text-white font-bold text-base sm:text-lg md:text-xl opacity-0"
-        style={{ fontFamily: 'Lora, serif', animation: 'fadeInTypewriter 0.6s ease-out 2.2s forwards' }}
-      >
-        <Typewriter
-          words={words}
-          loop={1}
-          cursor={showCursor}
-          cursorStyle="_"
-          typeSpeed={80}
-          deleteSpeed={50}
-          delaySpeed={1000}
-          onLoopDone={() => setShowCursor(false)}
-        />
-      </div>
+          className="typewriter text-white font-bold w-full whitespace-normal text-[4vw] sm:text-base sm:text-lg md:text-xl opacity-0"
+          style={{ fontFamily: 'Lora, serif', animation: 'fadeInTypewriter 0.6s ease-out 2.2s forwards' }}
+        >
+          <Typewriter
+            words={words}
+            loop={1}
+            cursor={showCursor}
+            cursorStyle="_"
+            typeSpeed={80}
+            deleteSpeed={50}
+            delaySpeed={1000}
+            onLoopDone={() => setShowCursor(false)}
+          />
+        </div>
       </div>
 
       {/* Reflection of Name */}
       {introDone && (
         <div
-          className="absolute left-1/2 z-10 flex items-center justify-center"
+          className="absolute left-1/2 z-10 hidden sm:flex items-center justify-center"
           style={{
             transform: `translate(-50%, ${reflectionTranslate}px) scaleY(-1.1) scaleX(.99)`,
             animation: 'fadeInReflectionLong 2s ease-in-out forwards',
@@ -110,7 +110,7 @@ export default function IntroAnimation() {
             width: '100%',
           }}
         >
-          <h1 className="name text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase whitespace-nowrap tracking-wide">
+          <h1 className="name text-white font-extrabold uppercase whitespace-nowrap sm:tracking-wide text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
             William Aldredge Neild
           </h1>
         </div>
@@ -119,7 +119,7 @@ export default function IntroAnimation() {
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Fira+Code&display=swap');
 
-        .reveal-container { width: max-content; height: 4rem; overflow: hidden; position: relative; }
+        .reveal-container { height: 4rem; position: relative; }
         .line { width: 0; }
         @keyframes fadeInLine { from { opacity: 0; width: 0; } to { opacity: 1; width: 100%; } }
         @keyframes sitDelay { to { opacity: 1; } }
