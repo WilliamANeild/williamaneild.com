@@ -44,7 +44,7 @@ export default function About() {
           <SectionTitle>Personally</SectionTitle>
           <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
             <ImageSlideIn direction="left" delay={0.2}>
-              <ImageStyled src="/PersonallyImage.JPG" alt="Personal Headshot" />
+              <ImageStyled src="/shi.jpg" alt="Personal Headshot" />
             </ImageSlideIn>
             <TextFadeUp delay={0.4}>
               <Paragraph>
