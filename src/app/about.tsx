@@ -4,11 +4,11 @@ export default function About() {
   return (
     <div className="text-white min-h-screen font-lora py-32 px-3 md:px-10">
       {/* Page Header */}
-      <h1 className="text-5xl font-bold tracking-wide text-center mb-16">
+      <h1 className="text-5xl font-lora font-bold tracking-wide text-center mb-16">
         About Me
       </h1>
 
-      <div className="max-w-5xl mx-auto space-y-12">
+      <div className="w-4/5 mx-auto space-y-12">
         {/* Professionally Section */}
         <Section id="professional">
           <SectionTitle>Professionally</SectionTitle>
@@ -199,9 +199,7 @@ function TextFadeUp({ children, delay = 0 }: { children: ReactNode; delay?: numb
   return (
     <div
       ref={ref}
-      className={`opacity-0 transition-all duration-700 translate-y-2 ${
-        isVisible ? "opacity-100 translate-y-0" : ""
-      }`}
+      className={`opacity-0 transition-all duration-700 translate-y-2 ${isVisible ? "opacity-100 translate-y-0" : ""}`}
       style={{ transitionDelay: `${delay}s` }}
     >
       {children}
@@ -210,17 +208,17 @@ function TextFadeUp({ children, delay = 0 }: { children: ReactNode; delay?: numb
 }
 
 function Paragraph({ children }: { children: ReactNode }) {
-  return <p className="text-[1.2rem] font-lora font-medium leading-snug text-gray-300 mb-4">{children}</p>;
+  return (
+    <p className="text-[1.2rem] font-lora font-medium leading-snug text-gray-300 mb-4">
+      {children}
+    </p>
+  );
 }
 
 function ImageStyled({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative w-full md:w-72 h-[22rem] rounded-lg overflow-hidden transition-opacity duration-700 ease-in shadow-[0_4px_20px_rgba(255,255,255,0.1)] border border-gray-500 border-opacity-30">
-      <img
-        src={src}
-        alt={alt}
-        className="object-cover w-full h-full"
-      />
+      <img src={src} alt={alt} className="object-cover w-full h-full" />
     </div>
   );
 }
