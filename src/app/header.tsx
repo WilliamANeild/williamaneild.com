@@ -18,7 +18,7 @@ export default function Header() {
 
       // midpoint detection
       const mid = scrollY + window.innerHeight / 2;
-      const introTop = 0;
+      
       // Use wrapper ID "about" or fall back to first about subsection
       const aboutTop = document.getElementById("about")?.offsetTop
         ?? document.getElementById("professional")?.offsetTop
