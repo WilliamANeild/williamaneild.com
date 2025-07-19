@@ -20,28 +20,16 @@ export default function Header() {
       const mid = scrollY + window.innerHeight / 2;
       const introTop = 0;
       // Use wrapper ID "about" or fall back to first about subsection
-      // Compute top of About section as earliest among its subsections
-      const aboutIds = ["professional", "academic", "personal"];
-      const aboutOffsets = aboutIds
-        .map(id => document.getElementById(id)?.offsetTop)
-        .filter((x): x is number => typeof x === 'number');
-      const aboutTop = aboutOffsets.length > 0 ? Math.min(...aboutOffsets) : Infinity;
+      const aboutTop = document.getElementById("about")?.offsetTop
+        ?? document.getElementById("professional")?.offsetTop
+        ?? Infinity;
       const expTop = document.getElementById("experience")?.offsetTop ?? Infinity;
       const contactTop = document.getElementById("contact")?.offsetTop ?? Infinity;
 
       let next = "intro";
-      // if at bottom of page, set contact
-      const scrollBottom = scrollY + window.innerHeight;
-      const pageBottom = document.documentElement.scrollHeight;
-      if (scrollBottom >= pageBottom - 10) {
-        next = "contact";
-      } else if (mid >= contactTop) {
-        next = "contact";
-      } else if (mid >= expTop) {
-        next = "experience";
-      } else if (mid >= aboutTop) {
-        next = "about";
-      }
+      if (mid >= contactTop) next = "contact";
+      else if (mid >= expTop) next = "experience";
+      else if (mid >= aboutTop) next = "about";
       setActiveSection(next);
     };
     window.addEventListener("scroll", onScroll);
