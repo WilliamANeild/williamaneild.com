@@ -41,7 +41,7 @@ export default function Header() {
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
-    const btn = nav.querySelector<HTMLButtonElement>(`button[data-id="${activeSection}"]`);
+    const btn = nav.querySelector<HTMLButtonElement>(`button[data-id=\"${activeSection}\"]`);
     if (btn) {
       const navRect = nav.getBoundingClientRect();
       const btnRect = btn.getBoundingClientRect();
