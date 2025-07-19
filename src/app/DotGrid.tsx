@@ -13,15 +13,29 @@ import './DotGrid.css';
 
 gsap.registerPlugin(InertiaPlugin);
 
-function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+// Define dot structure explicitly
+interface Dot {
+  cx: number;
+  cy: number;
+  xOffset: number;
+  yOffset: number;
+  _inertiaApplied: boolean;
+}
+
+// Throttle utility with unknown parameter types
+function throttle<T extends (...args: unknown[]) => void>(
+  func: T,
+  limit: number
+): T {
   let lastCall = 0;
-  return function (...args: any[]) {
+  const throttled = (...args: Parameters<T>): void => {
     const now = performance.now();
     if (now - lastCall >= limit) {
       lastCall = now;
       func(...args);
     }
-  } as T;
+  };
+  return throttled as T;
 }
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
@@ -67,7 +81,7 @@ const DotGrid: React.FC<DotGridProps> = ({
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const dotsRef = useRef<any[]>([]);
+  const dotsRef = useRef<Dot[]>([]);
   const pointerRef = useRef({
     x: 0,
     y: 0,
@@ -117,7 +131,7 @@ const DotGrid: React.FC<DotGridProps> = ({
     const startX = extraX / 2 + dotSize / 2;
     const startY = extraY / 2 + dotSize / 2;
 
-    const dots = [];
+    const dots: Dot[] = [];
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const cx = startX + x * cell;
@@ -132,10 +146,9 @@ const DotGrid: React.FC<DotGridProps> = ({
     if (!circlePath) return;
 
     let rafId: number;
-
     const proxSq = proximity * proximity;
 
-    const draw = () => {
+    const drawFrame = (): void => {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -169,10 +182,10 @@ const DotGrid: React.FC<DotGridProps> = ({
         ctx.restore();
       }
 
-      rafId = requestAnimationFrame(draw);
+      rafId = requestAnimationFrame(drawFrame);
     };
 
-    draw();
+    drawFrame();
     return () => cancelAnimationFrame(rafId);
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
@@ -186,13 +199,12 @@ const DotGrid: React.FC<DotGridProps> = ({
       window.addEventListener('resize', buildGrid);
     }
     return () => {
-      if (ro) ro.disconnect();
-      else window.removeEventListener('resize', buildGrid);
+      ro ? ro.disconnect() : window.removeEventListener('resize', buildGrid);
     };
   }, [buildGrid]);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
+    const handleMove = (e: MouseEvent): void => {
       const now = performance.now();
       const pr = pointerRef.current;
       const dt = pr.lastTime ? now - pr.lastTime : 16;
@@ -241,7 +253,7 @@ const DotGrid: React.FC<DotGridProps> = ({
       }
     };
 
-    const onClick = (e: MouseEvent) => {
+    const handleClick = (e: MouseEvent): void => {
       const rect = canvasRef.current!.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
@@ -268,14 +280,34 @@ const DotGrid: React.FC<DotGridProps> = ({
         }
       }
     };
+    // Fix: throttle is not defined. Use lodash.throttle or implement a simple throttle.
+    // We'll define a simple throttle function here.
+    function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+      let lastFunc: number;
+      let lastRan: number;
+      return function(this: any, ...args: any[]) {
+        if (!lastRan) {
+          func.apply(this, args);
+          lastRan = Date.now();
+        } else {
+          clearTimeout(lastFunc);
+          lastFunc = window.setTimeout(() => {
+            if (Date.now() - lastRan >= limit) {
+              func.apply(this, args);
+              lastRan = Date.now();
+            }
+          }, limit - (Date.now() - lastRan));
+        }
+      } as T;
+    }
 
-    const throttledMove = throttle(onMove, 50);
+    const throttledMove = throttle(handleMove, 50);
     window.addEventListener('mousemove', throttledMove, { passive: true });
-    window.addEventListener('click', onClick);
+    window.addEventListener('click', handleClick);
 
     return () => {
       window.removeEventListener('mousemove', throttledMove);
-      window.removeEventListener('click', onClick);
+      window.removeEventListener('click', handleClick);
     };
   }, [
     maxSpeed,
@@ -297,3 +329,4 @@ const DotGrid: React.FC<DotGridProps> = ({
 };
 
 export default DotGrid;
+
