@@ -40,7 +40,7 @@ export default function IntroAnimation() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/tard.avif"
+          src="/best.jpg"
           alt="Background"
           fill
           className="object-cover"
