@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./header";
+import ScrollProgress from "./ScrollProgress";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "William Aldredge Neild | Liam Neild | William A. Neild | William Liam Neild | Wiliam Neild",
+  title: "William Aldredge Neild — Portfolio",
   description:
     "Official personal website of William Aldredge Neild (aka Liam Neild).",
   icons: {
@@ -102,8 +104,10 @@ export default function Layout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
       >
+        <ScrollProgress />
         <Header />
         <main className="min-h-screen">{children}</main>
+        <Analytics />
       </body>
     </html>
   );

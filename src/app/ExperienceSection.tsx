@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef, CSSProperties } from "react";
+import { useState, useRef, useEffect, CSSProperties } from "react";
 
 const experiences = [
   { id: "algory", title: "Algory Capital", year: "2025", location: "Emory University, GA", role: "Portfolio Manager", bgSrc: "/Em.avif", logoSrc: "/AlgoryLogo.jpg", alt: "Algory Logo over Emory" },
@@ -19,12 +19,14 @@ interface ExperienceCardProps {
   bgSrc: string;
   logoSrc: string;
   alt: string;
+  cardWidth: number;
 }
 
-const ExperienceCard = ({ id, title, year, location, role, bgSrc, logoSrc, alt }: ExperienceCardProps) => (
+const ExperienceCard = ({ id, title, year, location, role, bgSrc, logoSrc, alt, cardWidth }: ExperienceCardProps) => (
   <Link
     href={`/${id}`}
-    className="bg-[#181818] text-white rounded-3xl overflow-hidden shadow-lg border-2 border-gray-500 flex-none w-80 flex-shrink-0 font-lora transform transition-transform duration-300 hover:scale-105 hover:z-20"
+    className="bg-[#181818] text-white rounded-3xl overflow-hidden shadow-lg border-2 border-gray-500 flex-none flex-shrink-0 font-lora transform transition-transform duration-300 hover:scale-105 hover:z-20"
+    style={{ width: cardWidth }}
   >
     <div className="relative w-full aspect-[3/4]">
       <Image src={bgSrc} alt={alt} fill className="object-cover" />
@@ -50,6 +52,26 @@ export default function ExperienceSection() {
   const [index, setIndex] = useState(count);
   const [transitioning, setTransitioning] = useState(true);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [visibleCount, setVisibleCount] = useState(3);
+  const [cardWidth, setCardWidth] = useState(320);
+
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth < 640) {
+        setVisibleCount(1);
+        setCardWidth(Math.min(window.innerWidth - 64, 320));
+      } else if (window.innerWidth < 1024) {
+        setVisibleCount(2);
+        setCardWidth(280);
+      } else {
+        setVisibleCount(3);
+        setCardWidth(320);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   // Triplicated items for infinite loop
   const items = [...experiences, ...experiences, ...experiences];
@@ -73,9 +95,7 @@ export default function ExperienceSection() {
     }
   };
 
-  const cardWidth = 320;
   const gap = 24;
-  const visibleCount = 3;
   const containerWidth = visibleCount * cardWidth + (visibleCount - 1) * gap;
 
   const trackStyle: CSSProperties = {
@@ -103,7 +123,7 @@ export default function ExperienceSection() {
           <div className="overflow-hidden mx-4" style={{ width: `${containerWidth}px` }}>
             <div ref={trackRef} style={trackStyle} onTransitionEnd={handleTransitionEnd}>
               {items.map((exp, idx) => (
-                <ExperienceCard key={`${exp.id}-${idx}`} {...exp} />
+                <ExperienceCard key={`${exp.id}-${idx}`} {...exp} cardWidth={cardWidth} />
               ))}
             </div>
           </div>

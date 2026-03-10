@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import Image from "next/image";
 
 export default function About() {
   return (
@@ -218,7 +219,7 @@ function Paragraph({ children }: { children: ReactNode }) {
 function ImageStyled({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative w-full md:w-72 h-[22rem] rounded-lg overflow-hidden transition-opacity duration-700 ease-in shadow-[0_4px_20px_rgba(255,255,255,0.1)] border border-gray-500 border-opacity-30">
-      <img src={src} alt={alt} className="object-cover w-full h-full" />
+      <Image src={src} alt={alt} fill className="object-cover" />
     </div>
   );
 }

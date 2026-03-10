@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@azure/msal-react": "^3.0.15",
+    "@vercel/analytics": "^1.6.1",
     "framer-motion": "^12.23.6",
     "gsap": "^3.13.0",
     "lucide-react": "^0.515.0",
