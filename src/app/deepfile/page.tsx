@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import PageWrapper from "../PageWrapper";
 
 // MSAL-based React component code (for display only)
 const msalCode = `import React, { useState } from "react";
@@ -87,6 +88,7 @@ export default function DeepFilePage() {
   }, []);
 
   return (
+    <PageWrapper>
     <main className="min-h-screen p-6 bg-gradient-to-b from-gray-900 to-black text-white space-y-12">
       {/* Back Link */}
       <Link href="/#experience" className="block mb-6 text-gray-400 hover:text-white">
@@ -137,5 +139,6 @@ export default function DeepFilePage() {
         </div>
       </div>
     </main>
+    </PageWrapper>
   );
 }

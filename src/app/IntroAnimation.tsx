@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { Typewriter } from 'react-simple-typewriter';
 
 const words = [
-  'blank',
   'Economics',
   'Mathematics',
   'Computer Science',
@@ -117,8 +116,6 @@ export default function IntroAnimation() {
       )}
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Fira+Code&display=swap');
-
         .reveal-container { height: 4rem; position: relative; }
         .line { width: 0; }
         @keyframes fadeInLine { from { opacity: 0; width: 0; } to { opacity: 1; width: 100%; } }

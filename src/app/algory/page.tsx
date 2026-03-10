@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import PageWrapper from "../PageWrapper";
 // Import Prism highlighted syntax from react-syntax-highlighter
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // Import the specific VS Code Dark+ theme
@@ -45,6 +46,7 @@ export default function AlgoryPage() {
   const [pageNumber] = useState(1);
 
   return (
+    <PageWrapper>
     <main className="min-h-screen p-6 bg-gradient-to-b from-gray-900 to-black text-white space-y-12">
       {/* Back Link */}
       <Link href="/#experience" className="block mb-6 text-gray-400 hover:text-white">
@@ -117,5 +119,6 @@ export default function AlgoryPage() {
         </div>
       </section>
     </main>
+    </PageWrapper>
   );
 }
