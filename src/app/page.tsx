@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import IntroAnimation from "./IntroAnimation";
-import Header from "./header";
 import AboutMe from "./about";
 import ExperienceSection from "./ExperienceSection";
 import Footer from "./footer";
@@ -33,7 +32,6 @@ export default function Home() {
   return (
     <div className="relative text-white">
       {/* 1. Full-screen NYC Hero */}
-      <Header />
       <IntroAnimation />
 
       {/* 2. Content + Dark-to-Black Ombre Gradient */}

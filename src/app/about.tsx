@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export default function About() {
   return (
-    <div className="text-white min-h-screen font-lora py-32 px-3 md:px-10">
+    <div id="about" className="text-white min-h-screen font-lora py-32 px-3 md:px-10">
       {/* Page Header */}
       <h1 className="text-5xl font-lora font-bold tracking-wide text-center mb-16">
         About Me
