@@ -64,7 +64,7 @@ export default function Layout({
           property="og:description"
           content="Official personal website of William Aldredge Neild (aka Liam Neild)." 
         />
-        <meta property="og:image" content="/PortfolioWebsiteImage1.png" />
+        <meta property="og:image" content="/LiamNeildAlgoryPMheadshot.png" />
         <meta property="og:url" content="https://williamaneild.com" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="William Neild Portfolio" />

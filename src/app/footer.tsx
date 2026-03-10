@@ -9,7 +9,7 @@ const DotGrid = dynamic(() => import("./DotGrid"), { ssr: false });
 
 export default function Footer() {
   return (
-    <div className="relative w-full h-[250px] bg-black text-white overflow-hidden">
+    <div id="contact" className="relative w-full h-[250px] bg-black text-white overflow-hidden">
       {/* Background Grid */}
       <DotGrid
         className="absolute inset-0 z-0"
